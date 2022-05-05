@@ -1,0 +1,34 @@
+# before using this one has to get rid of the empty spaces in ll. 1-9 in the time intervall column
+
+rawdata1 <- read.table("iperf_log_router-3_floor_meas-02.txt", header=F, skip=1, nrows = length(count.fields("iperf_log_router-3_floor_meas-02.txt"))-3)
+rawdata2 <- read.table("iperf_log_router-3_floor_meas-01.txt", header=F, skip=1, nrows = length(count.fields("iperf_log_router-3_floor_meas-01.txt"))-3)
+
+
+x <- as.numeric(rownames(rawdata1))
+y1 <- ifelse(rawdata1$V6=="Bytes", rawdata1$V5*0.001, ifelse(rawdata1$V6=="MBytes", rawdata1$V5*1000, rawdata1$V5))
+y2 <- ifelse(rawdata2$V6=="Bytes", rawdata2$V5*0.001, ifelse(rawdata2$V6=="MBytes", rawdata2$V5*1000, rawdata2$V5))
+
+plot(x, y1, xaxs="i", yaxs="i", lwd=2, xlab="t in s", ylab="Transfer in KBytes",main = "Measurement results for different distances", type="S", col="blue")
+
+lines(x=x, y=y2, col="red", lwd=2)
+
+grid()
+legend(200, 16000, legend=c("Large distance", "Small distance"), col=c("blue", "red"), lwd=2)
+
+
+# -----------------------------------------------------------------------------------------------------------
+
+rawdata3 <- read.table("C:/Users/marcu/Documents/iperf_log_router-3_floor_2clients_meas_01 (2).txt", header=F, skip=1, nrows = length(count.fields("C:/Users/marcu/Documents/iperf_log_router-3_floor_2clients_meas_01 (2).txt"))-3)
+rawdata4 <- read.table("C:/Users/marcu/Documents/iperf_log_router-4_floor_2clients_meas_01.txt", header=F, skip=1, nrows = length(count.fields("C:/Users/marcu/Documents/iperf_log_router-4_floor_2clients_meas_01.txt"))-3)
+
+
+X <- as.numeric(rownames(rawdata3))
+Y1 <- ifelse(rawdata3$V6=="Bytes", rawdata3$V5*0.001, ifelse(rawdata3$V6=="MBytes", rawdata3$V5*1000, rawdata3$V5))
+Y2 <- ifelse(rawdata4$V6=="Bytes", rawdata4$V5*0.001, ifelse(rawdata4$V6=="MBytes", rawdata4$V5*1000, rawdata4$V5))
+
+plot(X, Y1, xaxs="i", yaxs="i", lwd=2, xlab="t in s", ylab="Transfer in KBytes",main = "Measurement results for different distances with two clients", type="S", col="blue")
+
+lines(x=X, y=Y2, col="red", lwd=2)
+
+grid()
+legend(25, 25000, legend=c("Router 3", "Router 4"), col=c("blue", "red"), lwd=2)
